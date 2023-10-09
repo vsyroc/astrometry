@@ -63,6 +63,10 @@ def radians_to_hms(rad: float) -> tuple:
     return (int(-hours), int(minutes), seconds) if negative_flag else (int(hours), int(minutes), seconds)
 
 
+def radians_to_degrees(rad: float) -> float:
+    return rad * 180 / math.pi
+
+
 def radians_to_dms(rad: float) -> tuple:
     """
         Method convert radians to degrees, minutes and seconds

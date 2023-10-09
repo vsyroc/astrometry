@@ -3,7 +3,7 @@ import csv
 
 from astro.core.location_settings import gaia_filepath
 from astro.core.logger_settings import logger
-from alive_progress import alive_bar
+# from alive_progress import alive_bar
 from astro.base_operations.calculations import (
     calculate_distance,
     radians_to_dms,
@@ -11,7 +11,8 @@ from astro.base_operations.calculations import (
     radians_to_hms,
     radians_to_hms_str,
     dms_to_radians,
-    hms_to_radians
+    hms_to_radians,
+    radians_to_degrees
 )
 
 
@@ -47,10 +48,10 @@ def main() -> None:
 
         # distanse = calculate_distance(
         #     stars[0][0],
-        #     stars[0][1], 
+        #     stars[0][1],
         #     stars[0][2],
         #     stars[1][0],
-        #     stars[1][1], 
+        #     stars[1][1],
         #     stars[1][2],
         #     )
 
@@ -67,7 +68,30 @@ def main() -> None:
         # # print(counter)
 
 
+def test():
+    # это мое 
+    # ra = 283.21255717679503
+    # dec = 45.349694823151324
+
+
+    # Данил
+    ra = 176.26370021831409
+    dec = 0.005412190339654384
+
+    # Ильи и Максима 
+    # ra = 293.6137418404033
+    # dec = 47.83893574320811
+
+    ra_rad = dms_to_radians(ra)
+    dec_rad = dms_to_radians(dec)
+
+    dm = (1,0,0)
+
+    print(radians_to_degrees(ra_rad - dms_to_radians(*dm)), radians_to_degrees(ra_rad + dms_to_radians(*dm)), radians_to_degrees(dec_rad - dms_to_radians(*dm)),
+          radians_to_degrees(dec_rad + dms_to_radians(*dm)), sep='\n')
+
+
 if __name__ == '__main__':
     logger.info('Application is running')
-    main()
+    test()
     logger.info('Application has terminated')
