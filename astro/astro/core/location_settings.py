@@ -1,0 +1,1 @@
+gaia_filepath = '/Users/vladislavsyr/Desktop/atro_practice/GaiaSource_000-000-000.csv'
