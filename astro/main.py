@@ -69,23 +69,22 @@ def main() -> None:
 
 
 def test():
-    # это мое 
-    # ra = 283.21255717679503
-    # dec = 45.349694823151324
-
+    # Наше с Лехой 
+    ra = 283.21255717679503
+    dec = 45.349694823151324
 
     # Данил
-    ra = 176.26370021831409
-    dec = 0.005412190339654384
+    # ra = 176.26370021831409
+    # dec = 0.005412190339654384
 
-    # Ильи и Максима 
+    # Ильи и Максима
     # ra = 293.6137418404033
     # dec = 47.83893574320811
 
     ra_rad = dms_to_radians(ra)
     dec_rad = dms_to_radians(dec)
 
-    dm = (1,0,0)
+    dm = (0, 1, 0)
 
     print(radians_to_degrees(ra_rad - dms_to_radians(*dm)), radians_to_degrees(ra_rad + dms_to_radians(*dm)), radians_to_degrees(dec_rad - dms_to_radians(*dm)),
           radians_to_degrees(dec_rad + dms_to_radians(*dm)), sep='\n')

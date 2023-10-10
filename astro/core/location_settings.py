@@ -1,1 +1,4 @@
-gaia_filepath = '/Users/vladislavsyr/Desktop/atro_practice/GaiaSource_000-000-000.csv'
+from decouple import config
+
+
+gaia_filepath = config('gaia_path')
