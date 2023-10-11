@@ -7,12 +7,12 @@ from astro.core.logger_settings import logger
 from astro.base_operations.calculations import (
     calculate_distance,
     radians_to_dms,
-    radians_to_dms_str,
     radians_to_hms,
-    radians_to_hms_str,
     dms_to_radians,
     hms_to_radians,
-    radians_to_degrees
+    radians_to_degrees,
+    dms_to_degree,
+    finding_an_interval
 )
 
 
@@ -69,7 +69,7 @@ def main() -> None:
 
 
 def test():
-    # Наше с Лехой 
+    # Наше с Лехой
     ra = 283.21255717679503
     dec = 45.349694823151324
 
@@ -86,11 +86,31 @@ def test():
 
     dm = (0, 1, 0)
 
-    print(radians_to_degrees(ra_rad - dms_to_radians(*dm)), radians_to_degrees(ra_rad + dms_to_radians(*dm)), radians_to_degrees(dec_rad - dms_to_radians(*dm)),
-          radians_to_degrees(dec_rad + dms_to_radians(*dm)), sep='\n')
+    print(f'ra minus: {radians_to_degrees(ra_rad - dms_to_radians(*dm))}\nra plus: {radians_to_degrees(ra_rad + dms_to_radians(*dm))}\ndec minus: {radians_to_degrees(dec_rad - dms_to_radians(*dm))}\ndec plus: {radians_to_degrees(dec_rad + dms_to_radians(*dm))}')
+
+
+def print_interval(
+        ra: float,
+        dec: float,
+        dev: int or float or tuple
+) -> None:
+    print(f'ra: {ra}\ndec: {dec}')
+    if isinstance(dev, int) or isinstance(dev, float):
+        print(f'deviation: {dev}°')
+    elif isinstance(dev, tuple):
+        print(f'deviation: {dev[0]}° {dev[1]}\' {dev[2]}"')
+    ra_minus, ra_plus = finding_an_interval(ra, deviation=dev)
+    dec_minus, dec_plus = finding_an_interval(dec, deviation=dev)
+    print(
+        f'ra minus: {ra_minus}\nra plus: {ra_plus}\ndec minus: {dec_minus}\ndec plus: {dec_plus}')
 
 
 if __name__ == '__main__':
     logger.info('Application is running')
-    test()
+
+    ra = 283.21255717679503
+    dec = 45.349694823151324
+    dev = (0, 1, 0)
+    print_interval(ra, dec, dev)
+
     logger.info('Application has terminated')

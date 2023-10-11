@@ -1,7 +1,34 @@
 import math
 
 
-def hms_to_radians(hours: int or float, minutes: int or float = 0, seconds: int or float = 0) -> float:
+def finding_an_interval(
+        degree: int or float,
+        minutes: int or float = 0,
+        seconds: int or float = 0,
+        deviation: int or float or tuple = None
+) -> tuple or None:
+    # TODO: добавить проверку на типы
+    if isinstance(deviation, float) or isinstance(deviation, int):
+        minus = radians_to_degrees(dms_to_radians(degree, minutes, seconds) - \
+            dms_to_radians(deviation))
+        plus = radians_to_degrees(dms_to_radians(degree, minutes, seconds) + \
+            dms_to_radians(deviation))
+        return (minus, plus)
+    elif isinstance(deviation, tuple):
+        minus = radians_to_degrees(dms_to_radians(degree, minutes, seconds) - \
+            dms_to_radians(*deviation))
+        plus = radians_to_degrees(dms_to_radians(degree, minutes, seconds) + \
+            dms_to_radians(*deviation))
+        return (minus, plus)
+    else:
+        return None
+
+
+def hms_to_radians(
+        hours: int or float,
+        minutes: int or float = 0,
+        seconds: int or float = 0
+) -> float:
     """
     Method convert hours, minutes and seconds to radians
 
@@ -22,7 +49,24 @@ def hms_to_radians(hours: int or float, minutes: int or float = 0, seconds: int 
     return -radians if negative_flag else radians
 
 
-def dms_to_radians(degrees: int or float, minutes: int or float = 0, seconds: int or float = 0) -> float:
+def dms_to_degree(
+        degrees: int or float,
+        minutes: int or float = 0,
+        seconds: int or float = 0
+) -> float:
+    negative_flag = False
+    if degrees < 0:
+        degrees = abs(degrees)
+        negative_flag = True
+    decimal_degrees = degrees + minutes / 60 + seconds / 3600
+    return -decimal_degrees if negative_flag else decimal_degrees
+
+
+def dms_to_radians(
+        degrees: int or float,
+        minutes: int or float = 0,
+        seconds: int or float = 0
+) -> float:
     """
     Method convert degrees, minutes and seconds to radians
 
@@ -43,7 +87,10 @@ def dms_to_radians(degrees: int or float, minutes: int or float = 0, seconds: in
     return -radians if negative_flag else radians
 
 
-def radians_to_hms(rad: float) -> tuple:
+def radians_to_hms(
+        rad: float,
+        to_print: bool = False
+) -> tuple or None:
     """
     Method convert radians to hours, minutes and seconds
 
@@ -53,6 +100,9 @@ def radians_to_hms(rad: float) -> tuple:
     Returns:
         Returns the tuple with hours, minutes and seconds
     """
+    if to_print:
+        radians_to_hms_str(rad)
+        return
     negative_flag = False
     if rad < 0:
         rad = abs(rad)
@@ -63,11 +113,16 @@ def radians_to_hms(rad: float) -> tuple:
     return (int(-hours), int(minutes), seconds) if negative_flag else (int(hours), int(minutes), seconds)
 
 
-def radians_to_degrees(rad: float) -> float:
+def radians_to_degrees(
+        rad: float
+) -> float:
     return rad * 180 / math.pi
 
 
-def radians_to_dms(rad: float) -> tuple:
+def radians_to_dms(
+        rad: float,
+        to_print: bool = False
+) -> tuple or None:
     """
         Method convert radians to degrees, minutes and seconds
 
@@ -77,6 +132,9 @@ def radians_to_dms(rad: float) -> tuple:
         Returns:
             Returns the tuple with degrees, minutes and seconds
     """
+    if to_print:
+        radians_to_dms_str(rad)
+        return None
     negative_flag = False
     if rad < 0:
         rad = abs(rad)
@@ -87,7 +145,9 @@ def radians_to_dms(rad: float) -> tuple:
     return (int(-degrees), int(minutes), seconds) if negative_flag else (int(degrees), int(minutes), seconds)
 
 
-def radians_to_hms_str(rad: float) -> str:
+def radians_to_hms_str(
+        rad: float
+) -> str:
     """
     Method converts radians to hours, minutes and seconds for accurate string output
 
@@ -102,7 +162,9 @@ def radians_to_hms_str(rad: float) -> str:
     return out
 
 
-def radians_to_dms_str(rad: float) -> str:
+def radians_to_dms_str(
+        rad: float
+) -> str:
     """
     Method converts radians to degrees, minutes and seconds for accurate string output
 
@@ -117,13 +179,19 @@ def radians_to_dms_str(rad: float) -> str:
     return out
 
 
-def calculate_distance(ra1: float, dec1: float, plx1: float, ra2: float, dec2: float, plx2: float) -> float:
+def calculate_distance(
+        ra1: float,
+        dec1: float,
+        plx1: float,
+        ra2: float,
+        dec2: float,
+        plx2: float
+) -> float:
     """
     Для использования этой функции необходимо передать значения восхождения, склонения и параллакса двух звезд в градусах. Функция возвращает расстояние между звездами в парсеках.
     """
-    
-    # TODO: надо сделать перевод для парралакса, потому что на входе другие единицы измерения 
 
+    # TODO: надо сделать перевод для парралакса, потому что на входе другие единицы измерения
 
     # Преобразование восхождения и склонения в радианы
     ra1 = math.radians(ra1)
