@@ -16,27 +16,6 @@ d0 = 0.3011193895835285
 # dec0 = 45.349694823151324
 
 
-def test():
-    # Наше с Лехой
-    ra = 283.21255717679503
-    dec = 45.349694823151324
-
-    # Данил
-    # ra = 176.26370021831409
-    # dec = 0.005412190339654384
-
-    # Ильи и Максима
-    # ra = 293.6137418404033
-    # dec = 47.83893574320811
-
-    ra_rad = dms_to_radians(ra)
-    dec_rad = dms_to_radians(dec)
-
-    dm = (0, 1, 0)
-
-    print(f'ra minus: {radians_to_degrees(ra_rad - dms_to_radians(*dm))}\nra plus: {radians_to_degrees(ra_rad + dms_to_radians(*dm))}\ndec minus: {radians_to_degrees(dec_rad - dms_to_radians(*dm))}\ndec plus: {radians_to_degrees(dec_rad + dms_to_radians(*dm))}')
-
-
 def print_interval(
         ra: float,
         dec: float,
@@ -53,18 +32,6 @@ def print_interval(
         f'ra minus: {ra_minus}\nra plus: {ra_plus}\ndec minus: {dec_minus}\ndec plus: {dec_plus}')
 
 
-def main():
-    global ra0
-    global dec0
-
-    # Данил
-    # ra = 176.26370021831409
-    # dec = 0.005412190339654384
-
-    dev = (0, 1, 0)
-    print_interval(ra0, dec0, dev)
-
-
 def get_data_from_csv(
         path: str
 ) -> list:
@@ -72,13 +39,14 @@ def get_data_from_csv(
         reader = csv.reader(table, delimiter=',', quotechar='\n')
         rows = list(reader)
         new_rows = []
+        source_id = your_star_source_id
 
         for row in rows:
             new_row = []
             for item in row:
                 if re.search(r'\d+\.\d+', item) or re.search(r'\d+', item):
                     new_row.append(float(item))
-            if new_row != [] and len(new_row) > 3:
+            if new_row != [] and len(new_row) > 3 and new_row[0] != source_id:
                 new_rows.append(new_row)
 
         # for row in rows:
@@ -142,20 +110,18 @@ def finding_d(
     return new_stars
 
 
-def all_for_main_star(
+def all_for_your_star(
+        ra: float,
+        dec: float,
+        parallax: float,
+        pmra: float,
+        pmdec: float,
+        t: int
 ) -> list:
-    global ra0
-    global dec0
-
-    pmra = -25.12029842069031
-    pmdec = -31.141251994948167
-    parallax = 3.3209419074044937
-    t = 7
-
-    ra = ra0 + dms_to_radians(0, 0, pmra / 1000) * t
-    dec = dec0 + dms_to_radians(0, 0, pmdec / 1000) * t
+    new_ra = ra + dms_to_radians(0, 0, pmra / 1000) * t
+    new_dec = dec + dms_to_radians(0, 0, pmdec / 1000) * t
     d = 1 / parallax
-    return [ra, dec, d]
+    return [new_ra, new_dec, d]
 
 
 def finding_between_d(
@@ -190,7 +156,7 @@ def finding_true_answer(
 
 if __name__ == '__main__':
     logger.info('Application is running')
-    main()
+    # main()
     stars = get_data_from_csv(gaia)
 
     # for row in stars:
