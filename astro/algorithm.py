@@ -1,17 +1,12 @@
 import re
 import csv
 
-from astro.core.location_settings import (
-    kepler_filepath,
-    near_kepler_filepath
-)
-
-from astro.core.location_settings import gaia_filepath
+from astro.core.config import *
 from astro.core.logger_settings import logger
 from astro.base_operations.calculations import *
 
 
-gaia = near_kepler_filepath
+gaia = near_star_filepath
 
 ra0 = 283.2125563242885 # пересчитанные координаты для базовой звезды
 dec0 = 45.34969376631197
