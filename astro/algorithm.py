@@ -56,14 +56,11 @@ def get_data_from_csv(
 
 
 def finding_true_coord(
-        stars: list
+        stars: list,
+        t: int
 ) -> list:
     new_stars = []
-    t = 7
     for i in range(len(stars)):
-        global ra0
-        global dec0
-
         name = stars[i][0]
         ra = stars[i][1]
         dec = stars[i][2]
@@ -75,24 +72,59 @@ def finding_true_coord(
         new_stars.append([name, radians_to_degrees(new_ra), radians_to_degrees(new_dec), parallax])
     return new_stars
 
+# def finding_true_coord(
+#         stars: list
+# ) -> list:
+#     new_stars = []
+#     t = 7
+#     for i in range(len(stars)):
+#         global ra0
+#         global dec0
+
+#         name = stars[i][0]
+#         ra = stars[i][1]
+#         dec = stars[i][2]
+#         parallax = stars[i][3]
+#         pmra = stars[i][4]
+#         pmdec = stars[i][5]
+#         new_ra = dms_to_radians(ra) + dms_to_radians(0, 0, pmra / 1000) * t
+#         new_dec = dms_to_radians(dec) + dms_to_radians(0, 0, pmdec / 1000) * t
+#         new_stars.append([name, radians_to_degrees(new_ra), radians_to_degrees(new_dec), parallax])
+#     return new_stars
+
 
 def finding_l(
-        stars: list
+        stars: list,
+        ra0: float,
+        dec0: float,
 ) -> list:
     new_stars = []
-    t = 7
     for i in range(len(stars)):
-        global ra0
-        global dec0
-
         name = stars[i][0]
         ra = stars[i][1]
         dec = stars[i][2]
         parallax = stars[i][3]
-        l = math.acos(math.sin(dms_to_radians(dec)) * math.sin(dms_to_radians(dec0))
-                      + math.cos(dms_to_radians(dec)) * math.cos(dms_to_radians(dec0)) * math.cos(dms_to_radians(ra0) - dms_to_radians(ra)))
+        l = math.acos(math.sin(dms_to_radians(dec)) * math.sin(dec0)
+                      + math.cos(dms_to_radians(dec)) * math.cos(dec0) * math.cos(ra0 - dms_to_radians(ra)))
         new_stars.append([name, ra, dec, parallax, l])
     return new_stars
+# def finding_l(
+#         stars: list,
+# ) -> list:
+#     new_stars = []
+#     t = 7
+#     for i in range(len(stars)):
+#         global ra0
+#         global dec0
+
+#         name = stars[i][0]
+#         ra = stars[i][1]
+#         dec = stars[i][2]
+#         parallax = stars[i][3]
+#         l = math.acos(math.sin(dms_to_radians(dec)) * math.sin(dms_to_radians(dec0))
+#                       + math.cos(dms_to_radians(dec)) * math.cos(dms_to_radians(dec0)) * math.cos(dms_to_radians(ra0) - dms_to_radians(ra)))
+#         new_stars.append([name, ra, dec, parallax, l])
+#     return new_stars
 
 
 def finding_d(
@@ -118,8 +150,8 @@ def all_for_your_star(
         pmdec: float,
         t: int
 ) -> list:
-    new_ra = ra + dms_to_radians(0, 0, pmra / 1000) * t
-    new_dec = dec + dms_to_radians(0, 0, pmdec / 1000) * t
+    new_ra = dms_to_radians(ra) + dms_to_radians(0, 0, pmra / 1000) * t
+    new_dec = dms_to_radians(dec) + dms_to_radians(0, 0, pmdec / 1000) * t
     d = 1 / parallax
     return [new_ra, new_dec, d]
 
@@ -127,20 +159,30 @@ def all_for_your_star(
 def finding_between_d(
         stars: list
 ) -> list:
-    global ra0
-    global dec0
-    global d0
     answer = []
     for i in range(len(stars)):
-        name = stars[i][0]
-        ra = stars[i][1]
-        dec = stars[i][2]
         l = stars[i][3]
         d = stars[i][4]
         new_d = pow(d0, 2) + pow(d, 2) - 2 * d * d0 * math.cos(l)
-        # print(new_d)
         answer.append(new_d)
     return answer
+# def finding_between_d(
+#         stars: list
+# ) -> list:
+#     global ra0
+#     global dec0
+#     global d0
+#     answer = []
+#     for i in range(len(stars)):
+#         name = stars[i][0]
+#         ra = stars[i][1]
+#         dec = stars[i][2]
+#         l = stars[i][3]
+#         d = stars[i][4]
+#         new_d = pow(d0, 2) + pow(d, 2) - 2 * d * d0 * math.cos(l)
+#         # print(new_d)
+#         answer.append(new_d)
+#     return answer
 
 
 def finding_true_answer(
