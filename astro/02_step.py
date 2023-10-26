@@ -35,7 +35,10 @@ def main():
         dec0=dec0
     )
     stars_with_d = finding_d(stars=stars_with_l)
-    answer = finding_between_d(stars=stars_with_d)
+    answer = finding_between_d(
+        stars=stars_with_d,
+        d0=d0
+    )
     answer.sort()
     true_answer = finding_true_answer(answer=answer)
     for item in true_answer:

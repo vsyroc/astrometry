@@ -4,7 +4,6 @@ from astro.core.config import *
 
 
 def main():
-    # Надо указать отклонение в (градусах, минутах, секундах)
     deviation = (0, 1, 0)
     print_interval(
         ra=your_star_ra,
