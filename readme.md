@@ -7,6 +7,7 @@
   <li>4. Необходимо запустить `02_step.py` для получения ответа. Ответ будет в виде 10 значений, первое из которых равно 1.</li>
 </ol>
 
+<h2>Пример .env файла</h2>
 <pre>
 # For lab
 near_star_path=~/astrometry/data/kepler-62-near.csv
