@@ -114,7 +114,7 @@ def finding_between_d(
     for i in range(len(stars)):
         l = stars[i][3]
         d = stars[i][4]
-        new_d = pow(d0, 2) + pow(d, 2) - 2 * d * d0 * math.cos(l)
+        new_d = math.sqrt(pow(d0, 2) + pow(d, 2) - 2 * d * d0 * math.cos(l))
         answer.append(new_d)
     return answer
 
