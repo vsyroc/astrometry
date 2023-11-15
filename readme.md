@@ -19,7 +19,3 @@ your_star_pmra=-25.12029842069031
 your_star_pmdec=-31.141251994948167
 your_star_t=-981
 </pre>
-
-<div class="alert alert-info">
-  <strong>Примечание:</strong> Эта программа предназначена только для образовательных целей.
-</div>
