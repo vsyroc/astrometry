@@ -122,7 +122,10 @@ def finding_between_d(
 def finding_true_answer(
         answer: list
 ) -> list:
-    arr = answer[:10]
+    if answer[0] == 0:
+        arr = answer[1:11]
+    else:
+        arr = answer[:10]
     new_arr = []
     d = arr[0]
     for item in arr:
