@@ -1,15 +1,15 @@
+import math
 import re
 import csv
 
-from astro.core.config import *
-from astro.core.logger_settings import logger
-from astro.base_operations.calculations import *
+from astro.core.config import your_star_source_id
+from astro.base_operations.calculations import finding_an_interval, dms_to_radians, radians_to_degrees
 
 
 def print_interval(
         ra: float,
         dec: float,
-        dev: int or float or tuple
+        dev: int | float | tuple
 ) -> None:
     print(f'ra: {ra}\ndec: {dec}')
     if isinstance(dev, int) or isinstance(dev, float):
@@ -99,11 +99,11 @@ def all_for_your_star(
         pmra: float,
         pmdec: float,
         t: int
-) -> list:
+) -> tuple:
     new_ra = dms_to_radians(ra) + dms_to_radians(0, 0, pmra / 1000) * t
     new_dec = dms_to_radians(dec) + dms_to_radians(0, 0, pmdec / 1000) * t
     d = 1 / parallax
-    return [new_ra, new_dec, d]
+    return new_ra, new_dec, d
 
 
 def finding_between_d(

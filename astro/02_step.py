@@ -1,4 +1,4 @@
-from astro.core.config import *
+from astro.core.config import your_star_dec, your_star_pmdec, your_star_pmra, your_star_parallax, your_star_ra, your_star_t, near_star_filepath
 from astro.core.logger_settings import logger
 from astro.algorithm import (
     all_for_your_star,
@@ -12,7 +12,7 @@ from astro.algorithm import (
 
 
 def main():
-    your_star = all_for_your_star(
+    ra0, dec0, d0 = all_for_your_star(
         ra=your_star_ra,
         dec=your_star_dec,
         parallax=your_star_parallax,
@@ -20,9 +20,6 @@ def main():
         pmdec=your_star_pmdec,
         t=your_star_t
     )
-    ra0 = your_star[0]
-    dec0 = your_star[1]
-    d0 = your_star[2]
 
     near_stars = get_data_from_csv(near_star_filepath)
     stars_true_coord = finding_true_coord(
